@@ -12,3 +12,8 @@ function onSignIn(googleUser) {
     clients.push(client);
     aTag.click();
 }
+
+function test(){
+    const aTag = document.getElementById('aTag');
+    aTag.click();
+}
