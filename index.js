@@ -1,4 +1,4 @@
-const clients = require('./clients.json');
+//const clients = require('./clients.json');
 
 async function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
