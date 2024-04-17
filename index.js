@@ -3,20 +3,6 @@ var clients;
 
 async function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    var name = profile.getName();
-    var email = profile.getEmail();
-    var image = profile.getImageUrl();
-    console.log(name);
-    console.log(email);
-    console.log(image);
-    var client = { 
-        "name": name,
-        "Email": email,
-        "Image":  image
-    }
-    //const clients = await getClients();
-    clients.push(client);
-    console.log(clients);
 
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
@@ -43,14 +29,14 @@ function test(){
 
 function getClients(){
     fetch('https://danieldanzo.github.io/Google-Verification-test/clients.json')
-        .then((data)=>{
-            console.log("Hello from ",data);
-            console.log("Hello from json ",data.json());
-            data.json();
+        .then(response =>{
+            console.log("Hello from ",response);
+            console.log("Hello from json ");
+            response.json();
         })
-        .then((response)=>{
-            console.log("Hello ",response);
-            clients = response;
+        .then(data =>{
+            console.log("Hello ",data);
+            clients = data;
         })
     .catch((error)=>{
         console.log('Error: ',error);
