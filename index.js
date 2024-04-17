@@ -1,4 +1,5 @@
 //const clients = require('./clients.json');
+var clients;
 
 async function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
@@ -13,7 +14,7 @@ async function onSignIn(googleUser) {
         "Email": email,
         "Image":  image
     }
-    const clients = await getClients();
+    //const clients = await getClients();
     clients.push(client);
     console.log(clients);
 
@@ -30,22 +31,26 @@ function test(){
         "Email": "me",
         "Image":  "me"
     }
-    const clients = await getClients();
-    clients.push(client);
+    const clien = getClients();
+    console.log(clients);
+    //clients.push(client);
     console.log(clients);
     const aTag = document.getElementById('aTag');
-    aTag.click();
+    //aTag.click();
 }
 
 
 
-async function getClients(){
+function getClients(){
     fetch('https://danieldanzo.github.io/Google-Verification-test/clients.json')
         .then((data)=>{
+            console.log("Hello from ",data);
+            console.log("Hello from json ",data.json());
             data.json();
         })
         .then((response)=>{
-            return response;
+            console.log("Hello ",response);
+            clients = response;
         })
     .catch((error)=>{
         console.log('Error: ',error);
