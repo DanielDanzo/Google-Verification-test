@@ -1,7 +1,7 @@
 //const clients = require('./clients.json');
 var clients;
 
-async function onSignIn(googleUser) {
+function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
 
     
@@ -40,7 +40,7 @@ function getClients(){
         })
         .then(data =>{
             console.log("Hello ",data);
-            clients = data;
+            //clients = data;
         })
     .catch((error)=>{
         console.log('Error: ',error);
