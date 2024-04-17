@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <meta name="google-signin-client_id" content="729256465959-8ladu1rmi3ctqjvpjfs9qap68t15gvit.apps.googleusercontent.com">
     <script src="index.js" defer></script>
 </head>
 <body>
@@ -11,7 +12,10 @@
         <h1>Welcome to the final website</h1>
     </section>
     <section style="height: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <button type="button" style=" background-color: blue; border-radius: 0;"><a href="home.html" style="color: azure;">Sign-in</a></button>
+        <button type="button" style=" background-color: blue; border-radius: 0;"><a id="aTag" href="home.html" style="color: azure;">Sign-in</a></button>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </section>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 </html>
