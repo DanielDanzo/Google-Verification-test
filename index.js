@@ -2,9 +2,9 @@
 
 async function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    const name = profile.getName();
-    const email = profile.getEmail();
-    const image = profile.getImageUrl();
+    var name = profile.getName();
+    var email = profile.getEmail();
+    var image = profile.getImageUrl();
     console.log(name);
     console.log(email);
     console.log(image);
@@ -23,6 +23,22 @@ async function onSignIn(googleUser) {
     });
 }
 
+
+function test(){
+    var client = { 
+        "name": "me",
+        "Email": "me",
+        "Image":  "me"
+    }
+    const clients = await getClients();
+    clients.push(client);
+    console.log(clients);
+    const aTag = document.getElementById('aTag');
+    aTag.click();
+}
+
+
+
 async function getClients(){
     fetch('https://danieldanzo.github.io/Google-Verification-test/clients.json')
         .then((data)=>{
@@ -34,15 +50,4 @@ async function getClients(){
     .catch((error)=>{
         console.log('Error: ',error);
     })
-}
-
-function test(){
-    var client = { 
-        "name": "me",
-        "Email": "me",
-        "Image":  "me"
-    }
-    clients.push(client);
-    const aTag = document.getElementById('aTag');
-    aTag.click();
 }
