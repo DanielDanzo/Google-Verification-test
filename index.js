@@ -4,25 +4,29 @@ var clients;
 async function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
 
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
+    
 }
 
 
 function test(){
+    /*
     var client = { 
         "name": "me",
         "Email": "me",
         "Image":  "me"
     }
-    const clien = getClients();
-    console.log(clients);
+    //const clien = getClients();
+    //console.log(clients);
     //clients.push(client);
-    console.log(clients);
-    const aTag = document.getElementById('aTag');
-    //aTag.click();
+    //console.log(clients);
+    //const aTag = document.getElementById('aTag');
+    //aTag.click();8
+    */
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+
 }
 
 
