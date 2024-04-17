@@ -1,19 +1,43 @@
 const clients = require('./clients.json');
 
-function onSignIn(googleUser) {
+async function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    const aTag = document.getElementById('aTag');
+    const name = profile.getName();
+    const email = profile.getEmail();
+    const image = profile.getImageUrl();
+    console.log(name);
+    console.log(email);
+    console.log(image);
     var client = { 
-        "name": profile.getName(),
-        "Email": profile.getEmail(),
-        "Image":  profile.getImageUrl()
+        "name": name,
+        "Email": email,
+        "Image":  image
     }
-
+    const clients = await getClients();
     clients.push(client);
-    aTag.click();
+    console.log(clients);
+}
+
+async function getClients(){
+    fetch('https://danieldanzo.github.io/Google-Verification-test/clients.json')
+        .then((data)=>{
+            data.json();
+        })
+        .then((response)=>{
+            return response;
+        })
+    .catch((error)=>{
+        console.log('Error: ',error);
+    })
 }
 
 function test(){
+    var client = { 
+        "name": "me",
+        "Email": "me",
+        "Image":  "me"
+    }
+    clients.push(client);
     const aTag = document.getElementById('aTag');
     aTag.click();
 }
