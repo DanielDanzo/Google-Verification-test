@@ -145,27 +145,7 @@ const provider = new GoogleAuthProvider();
 
 const user = auth.currentUser;
 
-//sign-in using small window prompt
-signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    console.log('Hello World!');
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
+
 
 /*
 //sign-in by redirecting
@@ -276,6 +256,7 @@ function updateSigninStatus(isSignedIn) {
 btn.addEventListener('click',()=>{
     console.log('Hello World!');
     alert('Hello');
+    signInUser();
     //signIn();
     /*
     isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
@@ -285,3 +266,21 @@ btn.addEventListener('click',()=>{
         window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
     }*/
 })
+
+
+
+function signInUser(){
+    //sign-in using small window prompt
+    signInWithPopup(auth, provider)
+    .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // The signed-in user info.
+        const user = result.user;
+        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    });
+}
