@@ -3,9 +3,9 @@
 //import { getAnalytics } from "firebase/analytics";
 
 //import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"
-const { initializeApp } = require("firebase/app");
+import { initializeApp } from "./node_modules/firebase/app/firebase-app";
 //import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-const { getAuth, GoogleAuthProvider, onAuthStateChanged } = require("firebase/auth");
+import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "./node_modules/firebase/app/firebase-auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
