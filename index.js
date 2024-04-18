@@ -2,8 +2,11 @@
 //import { signInWithPopup, getRedirectResult, GoogleAuthProvider , signInWithRedirect, initializeApp, getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, linkWithCredential, EmailAuthProvider, signOut } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"
-import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js"
+//import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"
+const { initializeApp } = require("firebase/app");
+//import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js"
+const { getAuth, GoogleAuthProvider, onAuthStateChanged } = require("firebase/auth");
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -272,6 +275,7 @@ function updateSigninStatus(isSignedIn) {
 
 btn.addEventListener('click',()=>{
     console.log('Hello World!');
+    alert('Hello');
     //signIn();
     /*
     isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
