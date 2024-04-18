@@ -1,6 +1,9 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp, getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, linkWithCredential, EmailAuthProvider, signOut } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+//import { signInWithPopup, getRedirectResult, GoogleAuthProvider , signInWithRedirect, initializeApp, getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, linkWithCredential, EmailAuthProvider, signOut } from "firebase/app";
+//import { getAnalytics } from "firebase/analytics";
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"
+import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,13 +22,13 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth();
+//const analytics = getAnalytics(app);
+
 
 //send email to the user
 
 
-
+/*
 //get user email
 email = 'sempapadaniel123@gmail.com';
 
@@ -45,6 +48,8 @@ const actionCodeSettings = {
     },
     dynamicLinkDomain: 'example.page.link'
 };
+
+const auth = getAuth(app);
 
 sendSignInLinkToEmail(auth, email, actionCodeSettings)
     .then(() => {
@@ -91,9 +96,9 @@ if (isSignInWithEmailLink(auth, window.location.href)) {
         // Some error occurred, you can inspect the code: error.code
         // Common errors could be invalid email and invalid or expired OTPs.
     });
-}
+}*/
 
-
+/*
 //SingIn when user is already authentificated
 //NOTE: -User has to login in the same device where he first logged in otherwise we re-authentificate
 // Construct the email link credential from the current URL.
@@ -109,7 +114,7 @@ linkWithCredential(auth.currentUser, credential)
     .catch((error) => {
     // Some error occurred.
     });
-
+*/
 
 
 
@@ -130,10 +135,70 @@ signOut(auth).then(() => {
 
 
 
+//SIGN-IN WITH GOOGLE
+//create google instance
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+const user = auth.currentUser;
+
+//sign-in using small window prompt
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    console.log('Hello World!');
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+
+/*
+//sign-in by redirecting
+signInWithRedirect(auth, provider);
+
+//Get Google Auth token
+getRedirectResult(auth)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access Google APIs.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+
+*/
+
+
+
+
 
 
 //const clients = require('./clients.json');
-var clients;
+//var clients;
 var btn = document.getElementById('btn-signIn');
 
 /*
@@ -206,8 +271,8 @@ function updateSigninStatus(isSignedIn) {
 }*/
 
 btn.addEventListener('click',()=>{
-
-    signIn();
+    console.log('Hello World!');
+    //signIn();
     /*
     isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     if(isSignedIn){
