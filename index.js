@@ -2,10 +2,10 @@
 //import { signInWithPopup, getRedirectResult, GoogleAuthProvider , signInWithRedirect, initializeApp, getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, linkWithCredential, EmailAuthProvider, signOut } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 
-//import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"
-import { initializeApp } from "./node_modules/firebase/app/firebase-app";
-//import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "./node_modules/firebase/app/firebase-auth";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"
+//import { initializeApp } from "./node_modules/firebase/app/firebase-app";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
+//import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "./node_modules/firebase/app/firebase-auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
