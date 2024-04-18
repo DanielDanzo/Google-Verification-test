@@ -70,7 +70,7 @@ function updateSigninStatus(isSignedIn) {
     }
 }
 
-btn.addEventListener('click',()=>{
+btn.addEventListener('submit',()=>{
     isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     if(isSignedIn){
         const aTag = document.getElementById('aTag');
