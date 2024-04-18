@@ -1,5 +1,6 @@
 //const clients = require('./clients.json');
 var clients;
+var btn = document.getElementById('btn-signIn');
 
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
@@ -55,3 +56,25 @@ function getClients(){
         console.log('Error: ',error);
     })
 }
+
+function updateSigninStatus(isSignedIn) {
+    if (isSignedIn) {
+        return true;
+    //   authorizeButton.style.display = 'none';
+    //   signoutButton.style.display = 'block';
+    //   makeApiCall();
+    } else {
+        return false;
+    //   authorizeButton.style.display = 'block';
+    //   signoutButton.style.display = 'none';
+    }
+}
+
+btn.addEventListener('click',()=>{
+    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    if(isSignedIn){
+        const aTag = document.getElementById('aTag');
+        aTag.click();
+        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    }
+})
