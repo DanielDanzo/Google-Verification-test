@@ -176,6 +176,7 @@ btn_fundManganer_login.addEventListener('click',()=>{
 btn_platformAdmin_login.addEventListener('click',()=>{
     //After user clicks login. user will be signed in
     //signInUser();
+    console.log('Here we are');
     registerWithEmail();
 });
 
