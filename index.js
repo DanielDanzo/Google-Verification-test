@@ -186,7 +186,7 @@ var btn_register = document.getElementById('register-link');
 const btn_applicant_login = document.getElementById('btn-applicant-login');
 const btn_fundManganer_login = document.getElementById('btn-fundManager-login');
 const btn_platformAdmin_login = document.getElementById('btn-platformAmin-login');
-const btn_submit_signup = document.getElementById('btn-submit-signup');
+
 
 
 
@@ -363,18 +363,3 @@ function signInUser(){
     });
 }
 
-function registerUser(){
-    //sign-in using small window prompt
-    signInWithPopup(auth, provider)
-    .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        // The signed-in user info.
-        const user = result.user;
-        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-    });
-}
