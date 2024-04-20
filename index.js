@@ -330,8 +330,8 @@ btn_platformAdmin_login.addEventListener('click',()=>{
 
 btn_submit_signup.addEventListener('click',()=>{
     //console.log('Hello World!');
-    //alert('Hello');
-    registerUser();
+    alert('Hello');
+    //registerUser();
     //window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
     
     //signIn();
