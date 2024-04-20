@@ -327,7 +327,7 @@ btn_platformAdmin_login.addEventListener('click',()=>{
     }*/
 });
 
-
+/*
 btn_submit_signup.addEventListener('click',()=>{
     //console.log('Hello World!');
     alert('Hello');
@@ -341,9 +341,9 @@ btn_submit_signup.addEventListener('click',()=>{
         const aTag = document.getElementById('aTag');
         aTag.click();
         window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    }*/
+    }
 });
-
+*/
 
 
 
