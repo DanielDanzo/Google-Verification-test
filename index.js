@@ -262,7 +262,7 @@ function updateSigninStatus(isSignedIn) {
 btn_register.addEventListener('click',()=>{
     //console.log('Hello World!');
     //alert('Hello');
-    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/sign-up.html');
+    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/signUp.html');
     //signInUser();
     //signIn();
     /*
@@ -279,7 +279,7 @@ btn_applicant_login.addEventListener('click',()=>{
     //console.log('Hello World!');
     //alert('Hello');
     signInUser();
-    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    //window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
     
     //signIn();
     /*
@@ -297,7 +297,7 @@ btn_fundManganer_login.addEventListener('click',()=>{
     //console.log('Hello World!');
     //alert('Hello');
     signInUser();
-    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    //window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
     
     //signIn();
     /*
@@ -315,7 +315,7 @@ btn_platformAdmin_login.addEventListener('click',()=>{
     //console.log('Hello World!');
     //alert('Hello');
     signInUser();
-    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    //window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
     
     //signIn();
     /*
@@ -331,8 +331,8 @@ btn_platformAdmin_login.addEventListener('click',()=>{
 btn_submit_signup.addEventListener('click',()=>{
     //console.log('Hello World!');
     //alert('Hello');
-    signInUser();
-    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    registerUser();
+    //window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
     
     //signIn();
     /*
@@ -348,6 +348,22 @@ btn_submit_signup.addEventListener('click',()=>{
 
 
 function signInUser(){
+    //sign-in using small window prompt
+    signInWithPopup(auth, provider)
+    .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // The signed-in user info.
+        const user = result.user;
+        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    });
+}
+
+function registerUser(){
     //sign-in using small window prompt
     signInWithPopup(auth, provider)
     .then((result) => {
