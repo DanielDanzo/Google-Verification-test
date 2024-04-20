@@ -208,10 +208,10 @@ function registerWithEmail(){
         // This must be true.
         handleCodeInApp: true,
         iOS: {
-            bundleId: 'com.example.ios'
+            bundleId: 'com.LoyalAid.ios'
         },
         android: {
-            packageName: 'com.example.android',
+            packageName: 'com.LoyalAid.android',
             installApp: true,
             minimumVersion: '12'
         },
