@@ -262,7 +262,7 @@ function updateSigninStatus(isSignedIn) {
 btn_register.addEventListener('click',()=>{
     //console.log('Hello World!');
     //alert('Hello');
-    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/index.html');
+    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/sign-up.html');
     //signInUser();
     //signIn();
     /*

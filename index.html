@@ -3,77 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up for all users</title>
-    <script src="index.js" defer type="module"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="index.js"  defer type="module"></script>
 </head>
 <body>
-
-<header>
-    <h1>Sign Up Page</h1>
-</header>
-
-<main>
-    <form action="#" method="post">
-        <fieldset>
-            <legend>Your Information</legend>
-            <label for="fullname">Full Name:</label><br>
-            <input type="text" id="fullname" name="fullname" required><br>
-
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" required><br>
-
-            <label for="ID">Id:</label><br>
-            <input type="text" id="ID" name="ID" required><br>
-
-            <label for="reason">Reason:</label><br>
-            <input type="text" id="Reason" name="Reason" required><br>
-
-            <label for="Type">Type:</label><br>
-            <select id="Type" name="Type" required>
-                <option value="Admin">Admin</option>
-                <option value="Fund-Manager">Fund-Manager</option>
-                <option value="Applicant">Applicant</option>
-            </select><br>
-
-        </fieldset>
-
-        <fieldset>
-            <legend>Additional Information</legend>
-            <label for="dob">Date of Birth:</label><br>
-            <input type="date" id="dob" name="dob"><br>
-
-            <label for="Province">Province:</label><br>
-            <select id="Province" name="Province">
-                <option value="Gauteng">Gauteng</option>
-                <option value="Western-Cape">Western</option>
-                <option value="Limpopo">Limpopo</option>
-                <option value="other">Other</option>
-            </select><br>
-
-            <label for="Gender">Gender:</label><br>
-            <select id="Gender" name="Gender">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="other">Other</option>
-            </select><br>
-
-            <label for="Employed">Employed:</label><br>
-            <select id="Employed" name="Employed">
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-            </select><br>
-
-            <label for="Confirm">Confrimation Email:</label>
-            <input type="checkbox" id="ConfirmEmail" name="ConfirmEmail"><br>
-        </fieldset>
-
-        <button type="submit" id="btn-submit-signup">Sign Up</button>
-    </form>
-</main>
-
-<footer>
-    <p>&copy; 2024 Sign Up For LoyalAid</p>
-</footer>
-
+    <header id="header">
+        <h1>
+            CompanyName
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="#">Register</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#login-article">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="main-text">
+            <h2>Platform for funding</h2>
+            <p>Welcome to [Company Name], where we bridge the gap between organizations and impactful initiatives. Our platform provides a centralized hub for organizations, be they national lotteries or corporate giants, to showcase their funding opportunities. From educational endeavors like scholarships and bursaries to supporting business ventures and events, we offer a seamless solution for managing applications and maximizing impact. Whether it's enhancing corporate social responsibility or fostering innovation, [Company Name] is here to facilitate meaningful connections and drive positive change. Join us in empowering communities and shaping a brighter future together.</p>
+        </section>
+        <section id="login-article">
+            <h2>Login</h2>
+            <article>
+                <a id="btn-applicant-login" href="#">Applicants</a>
+                <a id="btn-fundMangaer-login" href="#">Fund manager</a>
+                <a id="btn-platformAdmin-login" href="#">Platform Admin</a>
+            </article> 
+        </section>
+        <section>
+            <h2>Register</h2>
+            <article>
+                <p>If you do not have an account, <a id="register-link" href="#">sign up</a></p>
+            </article> 
+        </section>
+    </main>
+    <footer>
+        &copy; Rights reserved 2024
+    </footer>
 </body>
 </html>
