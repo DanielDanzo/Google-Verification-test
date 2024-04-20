@@ -262,7 +262,7 @@ function updateSigninStatus(isSignedIn) {
 btn_register.addEventListener('click',()=>{
     //console.log('Hello World!');
     //alert('Hello');
-    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/register.html');
+    window.location.href = 'https://danieldanzo.github.io/Google-Verification-test/register.html';
     //signInUser();
     //signIn();
     /*
@@ -355,7 +355,7 @@ function signInUser(){
         const credential = GoogleAuthProvider.credentialFromResult(result);
         // The signed-in user info.
         const user = result.user;
-        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+        window.location.href ='https://danieldanzo.github.io/Google-Verification-test/home.html';
     }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
