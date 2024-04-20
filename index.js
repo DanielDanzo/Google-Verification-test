@@ -198,6 +198,7 @@ function signInUser(){
 
 
 function registerWithEmail(){
+    console.log('Hello');
     //get user email
     email = 'sempapadaniel123@gmail.com';
 
@@ -220,6 +221,7 @@ function registerWithEmail(){
 
     sendSignInLinkToEmail(auth, email, actionCodeSettings)
         .then(() => {
+            console.log('Hello2');
         // The link was successfully sent. Inform the user.
         console.log('Successfully logged in');
         // Save the email locally so you don't need to ask the user for it again
@@ -236,6 +238,7 @@ function registerWithEmail(){
     //complete signIn by checking whether the send link is the same as the link received from email
     // Confirm the link is a sign-in with email link.
     if (isSignInWithEmailLink(auth, window.location.href)) {
+        console.log('Hello3');
         // Additional state parameters can also be passed via URL.
         // This can be used to continue the user's intended action before triggering
         // the sign-in operation.
@@ -243,6 +246,7 @@ function registerWithEmail(){
         // the flow on the same device where they started it.
         let email = window.localStorage.getItem('emailForSignIn');
         if (!email) {
+            console.log('Hello4');
             // User opened the link on a different device. To prevent session fixation
             // attacks, ask the user to provide the associated email again. For example:
             email = window.prompt('Please provide your email for confirmation');
@@ -250,6 +254,7 @@ function registerWithEmail(){
         // The client SDK will parse the code from the link for you.
         signInWithEmailLink(auth, email, window.location.href)
         .then((result) => {
+            console.log('Hello5');
             // Clear email from storage.
             window.localStorage.removeItem('emailForSignIn');
             // You can access the new user via result.user
@@ -274,6 +279,7 @@ function registerWithEmail(){
     // Link the credential to the current user.
     linkWithCredential(auth.currentUser, credential)
         .then((usercred) => {
+            console.log('Hello6');
         // The provider is now successfully linked.
         // The phone user can now sign in with their phone number or email.
         })
