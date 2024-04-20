@@ -36,8 +36,6 @@ const provider = new GoogleAuthProvider();
 const user = auth.currentUser;
 
 
-const btn_submit_signup = document.getElementById('btn-submit-signup');
-
 function registerUser(){
     //sign-in using small window prompt
     signInWithPopup(auth, provider)
@@ -53,3 +51,10 @@ function registerUser(){
         const errorMessage = error.message;
     });
 }
+
+const btn_submit_signup = document.getElementById('btn-submit-signup');
+
+btn_submit_signup.addEventListener('click', ()=>{
+    registerUser();
+})
+
