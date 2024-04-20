@@ -96,7 +96,7 @@ article{
     padding: 10px 50px;
 }
 
-#login-article a{
+#login-article button{
     color: white;
     width: 20%;
     height: 20%;
@@ -106,7 +106,7 @@ article{
     transition: background-color 0.3s ease;
 }
 
-#login-article a:hover{
+#login-article button:hover{
     background-color: darkgray;
     color: black;
 }
