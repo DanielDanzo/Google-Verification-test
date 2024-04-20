@@ -1,14 +1,14 @@
 // Import the functions you need from the SDKs you need
-//import { signInWithPopup, getRedirectResult, GoogleAuthProvider , signInWithRedirect, initializeApp, getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, linkWithCredential, EmailAuthProvider, signOut } from "firebase/app";
-//import { getAnalytics } from "firebase/analytics";
+//import { getRedirectResult , signInWithRedirect, signOut } from "firebase/app";
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"
 //import { initializeApp } from "./node_modules/firebase/app/firebase-app";
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
+import { sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, linkWithCredential, EmailAuthProvider, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
 //import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "./node_modules/firebase/app/firebase-auth";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+
+
+//Below we we initialise any variable we might need for our website
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -21,105 +21,18 @@ const firebaseConfig = {
   appId: "1:663669566432:web:d34a19ea3989a6c3ce5985",
   measurementId: "G-YW4KG1DXWX"
 };
-
-
+var btn_register = document.getElementById('register-link');
+const btn_applicant_login = document.getElementById('btn-applicant-login');
+const btn_fundManganer_login = document.getElementById('btn-fundManager-login');
+const btn_platformAdmin_login = document.getElementById('btn-platformAmin-login');
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
-
-
-//send email to the user
-
-
-/*
-//get user email
-email = 'sempapadaniel123@gmail.com';
-
-const actionCodeSettings = {
-    // URL you want to redirect back to. The domain (www.example.com) for this
-    // URL must be in the authorized domains list in the Firebase Console.
-    url: 'https://danieldanzo.github.io/Google-Verification-test/home.html',
-    // This must be true.
-    handleCodeInApp: true,
-    iOS: {
-        bundleId: 'com.example.ios'
-    },
-    android: {
-        packageName: 'com.example.android',
-        installApp: true,
-        minimumVersion: '12'
-    },
-    dynamicLinkDomain: 'example.page.link'
-};
-
+//create google instance
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-sendSignInLinkToEmail(auth, email, actionCodeSettings)
-    .then(() => {
-    // The link was successfully sent. Inform the user.
-    console.log('Successfully logged in');
-    // Save the email locally so you don't need to ask the user for it again
-    // if they open the link on the same device.
-    window.localStorage.setItem('emailForSignIn', email);
-    // ...
-    })
-    .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ...
-});
-
-//complete signIn by checking whether the send link is the same as the link received from email
-// Confirm the link is a sign-in with email link.
-if (isSignInWithEmailLink(auth, window.location.href)) {
-    // Additional state parameters can also be passed via URL.
-    // This can be used to continue the user's intended action before triggering
-    // the sign-in operation.
-    // Get the email if available. This should be available if the user completes
-    // the flow on the same device where they started it.
-    let email = window.localStorage.getItem('emailForSignIn');
-    if (!email) {
-        // User opened the link on a different device. To prevent session fixation
-        // attacks, ask the user to provide the associated email again. For example:
-        email = window.prompt('Please provide your email for confirmation');
-    }
-    // The client SDK will parse the code from the link for you.
-    signInWithEmailLink(auth, email, window.location.href)
-    .then((result) => {
-        // Clear email from storage.
-        window.localStorage.removeItem('emailForSignIn');
-        // You can access the new user via result.user
-        console.log(result.user);
-        // Additional user info profile not available via:
-        // result.additionalUserInfo.profile == null
-        // You can check if the user is new or existing:
-        console.log(result.additionalUserInfo.isNewUser);
-    })
-    .catch((error) => {
-        // Some error occurred, you can inspect the code: error.code
-        // Common errors could be invalid email and invalid or expired OTPs.
-    });
-}*/
-
-/*
-//SingIn when user is already authentificated
-//NOTE: -User has to login in the same device where he first logged in otherwise we re-authentificate
-// Construct the email link credential from the current URL.
-const credential = EmailAuthProvider.credentialWithLink(
-    email, window.location.href);
-
-// Link the credential to the current user.
-linkWithCredential(auth.currentUser, credential)
-    .then((usercred) => {
-    // The provider is now successfully linked.
-    // The phone user can now sign in with their phone number or email.
-    })
-    .catch((error) => {
-    // Some error occurred.
-    });
-*/
-
-
+//Can be used to get the information of current user
+const user = auth.currentUser;
 
 /*
 //Now we signOut the user
@@ -128,22 +41,6 @@ signOut(auth).then(() => {
 }).catch((error) => {
   // An error happened.
 });*/
-
-
-
-
-
-
-
-
-
-
-//SIGN-IN WITH GOOGLE
-//create google instance
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-
-const user = auth.currentUser;
 
 
 
@@ -182,10 +79,7 @@ getRedirectResult(auth)
 
 //const clients = require('./clients.json');
 //var clients;
-var btn_register = document.getElementById('register-link');
-const btn_applicant_login = document.getElementById('btn-applicant-login');
-const btn_fundManganer_login = document.getElementById('btn-fundManager-login');
-const btn_platformAdmin_login = document.getElementById('btn-platformAmin-login');
+
 
 
 
@@ -260,90 +154,30 @@ function updateSigninStatus(isSignedIn) {
 }*/
 
 btn_register.addEventListener('click',()=>{
-    //console.log('Hello World!');
-    //alert('Hello');
+    //After pressing the register button, user is sent to register page
     window.location.href = 'https://danieldanzo.github.io/Google-Verification-test/register.html';
-    //signInUser();
-    //signIn();
-    /*
-    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    if(isSignedIn){
-        const aTag = document.getElementById('aTag');
-        aTag.click();
-        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    }*/
 });
 
 
 btn_applicant_login.addEventListener('click',()=>{
-    //console.log('Hello World!');
-    //alert('Hello');
+    //After user clicks login. user will be signed in
     signInUser();
-    //window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    
-    //signIn();
-    /*
-    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    if(isSignedIn){
-        const aTag = document.getElementById('aTag');
-        aTag.click();
-        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    }*/
 });
 
 
 
 btn_fundManganer_login.addEventListener('click',()=>{
-    //console.log('Hello World!');
-    //alert('Hello');
+    //After user clicks login. user will be signed in
     signInUser();
-    //window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    
-    //signIn();
-    /*
-    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    if(isSignedIn){
-        const aTag = document.getElementById('aTag');
-        aTag.click();
-        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    }*/
 });
 
 
 
 btn_platformAdmin_login.addEventListener('click',()=>{
-    //console.log('Hello World!');
-    //alert('Hello');
-    signInUser();
-    //window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    
-    //signIn();
-    /*
-    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    if(isSignedIn){
-        const aTag = document.getElementById('aTag');
-        aTag.click();
-        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    }*/
+    //After user clicks login. user will be signed in
+    //signInUser();
+    registerWithEmail();
 });
-
-/*
-btn_submit_signup.addEventListener('click',()=>{
-    //console.log('Hello World!');
-    alert('Hello');
-    //registerUser();
-    //window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    
-    //signIn();
-    /*
-    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    if(isSignedIn){
-        const aTag = document.getElementById('aTag');
-        aTag.click();
-        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
-    }
-});
-*/
 
 
 
@@ -351,15 +185,100 @@ function signInUser(){
     //sign-in using small window prompt
     signInWithPopup(auth, provider)
     .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
         // The signed-in user info.
         const user = result.user;
+        //Then take the user to their desired home page
         window.location.href ='https://danieldanzo.github.io/Google-Verification-test/home.html';
     }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
     });
+}
+
+
+function registerWithEmail(){
+    //get user email
+    email = 'sempapadaniel123@gmail.com';
+
+    const actionCodeSettings = {
+        // URL you want to redirect back to. The domain (www.example.com) for this
+        // URL must be in the authorized domains list in the Firebase Console.
+        url: 'https://danieldanzo.github.io/Google-Verification-test/home.html',
+        // This must be true.
+        handleCodeInApp: true,
+        iOS: {
+            bundleId: 'com.example.ios'
+        },
+        android: {
+            packageName: 'com.example.android',
+            installApp: true,
+            minimumVersion: '12'
+        },
+        dynamicLinkDomain: 'example.page.link'
+    };
+
+    sendSignInLinkToEmail(auth, email, actionCodeSettings)
+        .then(() => {
+        // The link was successfully sent. Inform the user.
+        console.log('Successfully logged in');
+        // Save the email locally so you don't need to ask the user for it again
+        // if they open the link on the same device.
+        window.localStorage.setItem('emailForSignIn', email);
+        // ...
+        })
+        .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ...
+        });
+
+    //complete signIn by checking whether the send link is the same as the link received from email
+    // Confirm the link is a sign-in with email link.
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+        // Additional state parameters can also be passed via URL.
+        // This can be used to continue the user's intended action before triggering
+        // the sign-in operation.
+        // Get the email if available. This should be available if the user completes
+        // the flow on the same device where they started it.
+        let email = window.localStorage.getItem('emailForSignIn');
+        if (!email) {
+            // User opened the link on a different device. To prevent session fixation
+            // attacks, ask the user to provide the associated email again. For example:
+            email = window.prompt('Please provide your email for confirmation');
+        }
+        // The client SDK will parse the code from the link for you.
+        signInWithEmailLink(auth, email, window.location.href)
+        .then((result) => {
+            // Clear email from storage.
+            window.localStorage.removeItem('emailForSignIn');
+            // You can access the new user via result.user
+            console.log(result.user);
+            // Additional user info profile not available via:
+            // result.additionalUserInfo.profile == null
+            // You can check if the user is new or existing:
+            console.log(result.additionalUserInfo.isNewUser);
+        })
+        .catch((error) => {
+            // Some error occurred, you can inspect the code: error.code
+            // Common errors could be invalid email and invalid or expired OTPs.
+        });
+    }
+
+    //SingIn when user is already authentificated
+    //NOTE: -User has to login in the same device where he first logged in otherwise we re-authentificate
+    // Construct the email link credential from the current URL.
+    const credential = EmailAuthProvider.credentialWithLink(
+        email, window.location.href);
+
+    // Link the credential to the current user.
+    linkWithCredential(auth.currentUser, credential)
+        .then((usercred) => {
+        // The provider is now successfully linked.
+        // The phone user can now sign in with their phone number or email.
+        })
+        .catch((error) => {
+        // Some error occurred.
+        });
 }
 
