@@ -55,7 +55,17 @@ function registerUser(){
 const btn_submit_signup = document.getElementById('btn-submit-signup');
 
 btn_submit_signup.addEventListener('click', ()=>{
+    const userName = document.getElementById('fullname');
+    const userEmail = document.getElementById('email');
+    const userIDNum = document.getElementById('ID');
+    const userReason = document.getElementById('Reason');
+    const userRole = document.getElementById('Type');
+
+
+    if(userName.value && userEmail.value && userIDNum.value && userReason.value && userRole.value){
+        registerUser();
+    }
     //alert('Hello');
-    registerUser();
+    
 })
 
