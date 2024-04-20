@@ -2,10 +2,7 @@
 //import { getRedirectResult , signInWithRedirect, signOut } from "firebase/app";
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"
-//import { initializeApp } from "./node_modules/firebase/app/firebase-app";
 import { sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, linkWithCredential, EmailAuthProvider, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"
-//import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "./node_modules/firebase/app/firebase-auth";
-
 
 
 //Below we we initialise any variable we might need for our website
@@ -24,7 +21,7 @@ const firebaseConfig = {
 var btn_register = document.getElementById('register-link');
 const btn_applicant_login = document.getElementById('btn-applicant-login');
 const btn_fundManganer_login = document.getElementById('btn-fundManager-login');
-const btn_platformAdmin_login = document.getElementById('btn-platformAmin-login');
+const btn_platformAdmin_login = document.getElementById('btn-platformAdmin-login');
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 //create google instance
@@ -72,116 +69,29 @@ getRedirectResult(auth)
 
 */
 
-
-
-
-
-
-//const clients = require('./clients.json');
-//var clients;
-
-
-
-
-
-/*
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-}*/
-
-
-/*
-function clickButton(){
-    const aTag = document.getElementById('aTag');
-    aTag.click();
-}
-
-
-function test(){
-    /*
-    var client = { 
-        "name": "me",
-        "Email": "me",
-        "Image":  "me"
-    }
-    //const clien = getClients();
-    //console.log(clients);
-    //clients.push(client);
-    //console.log(clients);
-    //const aTag = document.getElementById('aTag');
-    //aTag.click();8
-    
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-
-}
-
-
-
-function getClients(){
-    fetch('https://danieldanzo.github.io/Google-Verification-test/clients.json')
-        .then(response =>{
-            console.log("Hello from ",response);
-            console.log("Hello from json ");
-            response.json();
-        })
-        .then(data =>{
-            console.log("Hello ",data);
-            //clients = data;
-        })
-    .catch((error)=>{
-        console.log('Error: ',error);
-    })
-}
-
-function updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
-        return true;
-    //   authorizeButton.style.display = 'none';
-    //   signoutButton.style.display = 'block';
-    //   makeApiCall();
-    } else {
-        return false;
-    //   authorizeButton.style.display = 'block';
-    //   signoutButton.style.display = 'none';
-    }
-}*/
-
 btn_register.addEventListener('click',()=>{
     //After pressing the register button, user is sent to register page
     window.location.href = 'https://danieldanzo.github.io/Google-Verification-test/register.html';
 });
-
 
 btn_applicant_login.addEventListener('click',()=>{
     //After user clicks login. user will be signed in
     signInUser();
 });
 
-
-
 btn_fundManganer_login.addEventListener('click',()=>{
     //After user clicks login. user will be signed in
     signInUser();
 });
 
-
-
 btn_platformAdmin_login.addEventListener('click',()=>{
     //After user clicks login. user will be signed in
-    //signInUser();
-    console.log('Here we are');
-    registerWithEmail();
+    signInUser();
+    //console.log('Here we are');
+    //registerWithEmail();
 });
 
-
-
+//FUNCTION: Registers user using their google email
 function signInUser(){
     //sign-in using small window prompt
     signInWithPopup(auth, provider)
