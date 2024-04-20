@@ -55,7 +55,7 @@ function registerUser(){
 const btn_submit_signup = document.getElementById('btn-submit-signup');
 
 btn_submit_signup.addEventListener('click', ()=>{
-    alert('Hello');
+    //alert('Hello');
     registerUser();
 })
 
