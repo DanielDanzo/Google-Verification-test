@@ -182,7 +182,13 @@ getRedirectResult(auth)
 
 //const clients = require('./clients.json');
 //var clients;
-var btn = document.getElementById('btn-signIn');
+var btn_register = document.getElementById('register-link');
+const btn_applicant_login = document.getElementById('btn-applicant-login');
+const btn_fundManganer_login = document.getElementById('btn-fundManager-login');
+const btn_platformAdmin_login = document.getElementById('btn-platformAmin-login');
+const btn_submit_signup = document.getElementById('btn-submit-signup');
+
+
 
 /*
 function onSignIn(googleUser) {
@@ -253,10 +259,11 @@ function updateSigninStatus(isSignedIn) {
     }
 }*/
 
-btn.addEventListener('click',()=>{
-    console.log('Hello World!');
-    alert('Hello');
-    signInUser();
+btn_register.addEventListener('click',()=>{
+    //console.log('Hello World!');
+    //alert('Hello');
+    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/index.html');
+    //signInUser();
     //signIn();
     /*
     isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
@@ -265,7 +272,78 @@ btn.addEventListener('click',()=>{
         aTag.click();
         window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
     }*/
-})
+});
+
+
+btn_applicant_login.addEventListener('click',()=>{
+    //console.log('Hello World!');
+    //alert('Hello');
+    signInUser();
+    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    
+    //signIn();
+    /*
+    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    if(isSignedIn){
+        const aTag = document.getElementById('aTag');
+        aTag.click();
+        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    }*/
+});
+
+
+
+btn_fundManganer_login.addEventListener('click',()=>{
+    //console.log('Hello World!');
+    //alert('Hello');
+    signInUser();
+    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    
+    //signIn();
+    /*
+    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    if(isSignedIn){
+        const aTag = document.getElementById('aTag');
+        aTag.click();
+        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    }*/
+});
+
+
+
+btn_platformAdmin_login.addEventListener('click',()=>{
+    //console.log('Hello World!');
+    //alert('Hello');
+    signInUser();
+    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    
+    //signIn();
+    /*
+    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    if(isSignedIn){
+        const aTag = document.getElementById('aTag');
+        aTag.click();
+        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    }*/
+});
+
+
+btn_submit_signup.addEventListener('click',()=>{
+    //console.log('Hello World!');
+    //alert('Hello');
+    signInUser();
+    window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    
+    //signIn();
+    /*
+    isSignedIn = updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    if(isSignedIn){
+        const aTag = document.getElementById('aTag');
+        aTag.click();
+        window.location.replace('https://danieldanzo.github.io/Google-Verification-test/home.html');
+    }*/
+});
+
 
 
 
