@@ -99,7 +99,7 @@ function signInUser(){
     .then((result) => {
         // The signed-in user info.
         const user = result.user;
-        window.localStorage.setItem('UserInfo', user);
+        window.localStorage.setItem('UserInfo', user.email);
         //Then take the user to their desired home page
         if(admin){
             window.location.href ='https://danieldanzo.github.io/Google-Verification-test/home.html';
