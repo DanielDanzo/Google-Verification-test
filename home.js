@@ -25,7 +25,7 @@ const user1 = window.localStorage.getItem('UserName');
 console.log(user);
 console.log(user1);
 console.log('Hello');
-pTag.textContent = "Hello "+ user.email;
+pTag.textContent = "Hello "+ user;
 
 btn.addEventListener('click', ()=>{
     //Now we signOut the user

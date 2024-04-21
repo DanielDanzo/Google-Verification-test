@@ -101,7 +101,7 @@ function signInUser(){
         const user = result.user;
         window.localStorage.setItem('UserEmail', user.email);
         window.localStorage.setItem('UserName', user.name);
-        window.localStorage.setItem('UserName2', user.email);
+        window.localStorage.setItem('UserName2', user.getImage);
         //Then take the user to their desired home page
         if(admin){
             window.location.href ='https://danieldanzo.github.io/Google-Verification-test/home.html';
