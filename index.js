@@ -27,17 +27,15 @@ const app = initializeApp(firebaseConfig);
 //create google instance
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+var admin = false;
+var fundManger = false;
+var applicant = false;
 
 //Can be used to get the information of current user
 const user = auth.currentUser;
 
 /*
-//Now we signOut the user
-signOut(auth).then(() => {
-  // Sign-out successful.
-}).catch((error) => {
-  // An error happened.
-});*/
+*/
 
 
 
@@ -76,16 +74,19 @@ btn_register.addEventListener('click',()=>{
 
 btn_applicant_login.addEventListener('click',()=>{
     //After user clicks login. user will be signed in
+    applicant = true;
     signInUser();
 });
 
 btn_fundManganer_login.addEventListener('click',()=>{
     //After user clicks login. user will be signed in
+    fundManger = true;
     signInUser();
 });
 
 btn_platformAdmin_login.addEventListener('click',()=>{
     //After user clicks login. user will be signed in
+    admin = true;
     signInUser();
     //console.log('Here we are');
     //registerWithEmail();
@@ -98,8 +99,16 @@ function signInUser(){
     .then((result) => {
         // The signed-in user info.
         const user = result.user;
+        window.localStorage.setItem('UserInfo', user);
         //Then take the user to their desired home page
-        window.location.href ='https://danieldanzo.github.io/Google-Verification-test/home.html';
+        if(admin){
+            window.location.href ='https://danieldanzo.github.io/Google-Verification-test/home.html';
+        }else if(fundManger){
+            window.location.href ='https://danieldanzo.github.io/Google-Verification-test/home.html';
+        }else{
+            window.location.href ='https://danieldanzo.github.io/Google-Verification-test/home.html';
+        }
+        
     }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
