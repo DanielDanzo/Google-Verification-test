@@ -23,7 +23,7 @@ const provider = new GoogleAuthProvider();
 const user = window.localStorage.getItem('UserInfo');
 console.log(user);
 console.log('Hello');
-pTag.value = "Hello "+ user.Email;
+pTag.textContent = "Hello "+ user.Email;
 
 btn.addEventListener('click', ()=>{
     //Now we signOut the user
