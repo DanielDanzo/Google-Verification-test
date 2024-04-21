@@ -22,6 +22,7 @@ const provider = new GoogleAuthProvider();
 //Can be used to get the information of current user
 const user = window.localStorage.getItem('UserInfo');
 console.log(user);
+console.log('Hello');
 pTag.value = "Hello "+ user.Email;
 
 btn.addEventListener('click', ()=>{
