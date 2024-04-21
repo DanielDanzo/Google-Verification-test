@@ -25,7 +25,7 @@ const user1 = auth.currentUser;
 console.log(user);
 console.log(user1);
 console.log('Hello');
-pTag.textContent = "Hello "+ user.Email;
+pTag.textContent = "Hello "+ user.email;
 
 btn.addEventListener('click', ()=>{
     //Now we signOut the user
