@@ -20,8 +20,8 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 //Can be used to get the information of current user
-const user = window.localStorage.getItem('UserInfo');
-const user1 = auth.currentUser;
+const user = window.localStorage.getItem('UserEmail');
+const user1 = window.localStorage.getItem('UserName');
 console.log(user);
 console.log(user1);
 console.log('Hello');
