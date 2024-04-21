@@ -23,7 +23,7 @@ const provider = new GoogleAuthProvider();
 const user = window.localStorage.getItem('UserInfo');
 const user1 = auth.currentUser;
 console.log(user);
-console.log(user1);
+console.log(user1,'Yebo');
 console.log('Hello');
 pTag.textContent = "Hello "+ user.Email;
 
