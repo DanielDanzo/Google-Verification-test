@@ -88,7 +88,6 @@ btn_platformAdmin_login.addEventListener('click',()=>{
     //After user clicks login. user will be signed in
     admin = true;
     signInUser();
-    //console.log('Here we are');
     //registerWithEmail();
 });
 
