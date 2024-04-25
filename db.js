@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"
-import { getFirestore, collection, addDoc  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -19,6 +19,8 @@ const db = getFirestore(app);
 
 //intialise app variables
 const addBtn = document.getElementById('addSum');
+const getBtn = document.getElementById('getSum');
+const allInfo = document.getElementById('Client-info');
 
 
 //adds dummy data to the database
@@ -42,7 +44,18 @@ async function addUser(){
     }
 }
 
+async function getUsers(){
+  const querySnapshot = await getDocs(collection(db, "users"));
+  querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${doc.data()}`);
+  });
+}
+
 addBtn.addEventListener('click', ()=>{
     addUser();
+});
+
+getBtn.addEventListener('click', ()=>{
+  getUsers();
 });
 
