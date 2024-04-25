@@ -45,7 +45,7 @@ async function addUser(){
     }
 }
 
-function getUsers(){
+async function getUsers(){
   // const querySnapshot = await getDocs(collection(db, "users"));
   // querySnapshot.forEach((doc) => {
   //   users.push(doc.data);
@@ -54,18 +54,16 @@ function getUsers(){
   // console.log(querySnapshot);
 
   //var docRef = db.collection("users").doc("SF");
-  var docRef = db.collection("users");
-  docRef.get().then((doc) => {
-      if (doc.exists) {
-          users.push(doc.data);
-          //console.log("Document data:", doc.data());
-      } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-      }
-  }).catch((error) => {
-      console.log("Error getting document:", error);
-  });
+  const docRef = doc(db, "cities", "SF");
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    users.push(doc.data);
+    console.log("Document data:", docSnap.data());
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+  }
 }
 
 addBtn.addEventListener('click', ()=>{
