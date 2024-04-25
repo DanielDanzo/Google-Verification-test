@@ -54,8 +54,8 @@ async function getUsers(){
   // console.log(querySnapshot);
 
   //var docRef = db.collection("users").doc("SF");
-  
-  const docRef = doc(db, "users");
+
+  const docRef = collection(db, "users");
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
