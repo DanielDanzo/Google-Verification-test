@@ -53,8 +53,8 @@ function getUsers(){
   // });
   // console.log(querySnapshot);
 
-  var docRef = db.collection("cities").doc("SF");
-
+  //var docRef = db.collection("users").doc("SF");
+  var docRef = db.collection("users");
   docRef.get().then((doc) => {
       if (doc.exists) {
           users.push(doc.data);
