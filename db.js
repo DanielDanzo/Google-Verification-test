@@ -47,7 +47,8 @@ async function addUser(){
 async function getUsers(){
   const querySnapshot = await getDocs(collection(db, "users"));
   querySnapshot.forEach((doc) => {
-    doc.data.forEach((elem)=>{
+    var sub = doc.data;
+    sub.forEach((elem)=>{
       console.log(elem);
     })
     //console.log(`${doc.id} => ${doc.data()}`);
