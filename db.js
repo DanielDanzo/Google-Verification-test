@@ -21,6 +21,7 @@ const db = getFirestore(app);
 const addBtn = document.getElementById('addSum');
 const getBtn = document.getElementById('getSum');
 const allInfo = document.getElementById('Client-info');
+const users = [];
 
 
 //adds dummy data to the database
@@ -47,9 +48,8 @@ async function addUser(){
 async function getUsers(){
   const querySnapshot = await getDocs(collection(db, "users"));
   querySnapshot.forEach((doc) => {
-    var sub = doc.data;
-    
-    //console.log(`${doc.id} => ${doc.data()}`);
+    users.push(doc.data);
+    console.log(`${doc.id} => ${doc.data()}`);
   });
   console.log(querySnapshot);
 }
@@ -60,5 +60,6 @@ addBtn.addEventListener('click', ()=>{
 
 getBtn.addEventListener('click', ()=>{
   getUsers();
+  console.log(users);
 });
 
