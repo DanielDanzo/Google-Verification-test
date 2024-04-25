@@ -53,6 +53,7 @@ async function getUsers(){
     })
     //console.log(`${doc.id} => ${doc.data()}`);
   });
+  console.log(querySnapshot);
 }
 
 addBtn.addEventListener('click', ()=>{
