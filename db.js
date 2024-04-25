@@ -45,13 +45,27 @@ async function addUser(){
     }
 }
 
-async function getUsers(){
-  const querySnapshot = await getDocs(collection(db, "users"));
-  querySnapshot.forEach((doc) => {
-    users.push(doc.data);
-    //console.log(`${doc.id} => ${doc.data()}`);
+function getUsers(){
+  // const querySnapshot = await getDocs(collection(db, "users"));
+  // querySnapshot.forEach((doc) => {
+  //   users.push(doc.data);
+  //   //console.log(`${doc.id} => ${doc.data()}`);
+  // });
+  // console.log(querySnapshot);
+
+  var docRef = db.collection("cities").doc("SF");
+
+  docRef.get().then((doc) => {
+      if (doc.exists) {
+          users.push(doc.data);
+          //console.log("Document data:", doc.data());
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+  }).catch((error) => {
+      console.log("Error getting document:", error);
   });
-  console.log(querySnapshot);
 }
 
 addBtn.addEventListener('click', ()=>{
