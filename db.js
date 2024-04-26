@@ -25,20 +25,27 @@ const addUserAppBtn = document.getElementById('addUserApp');
 const updateSignInBtn = document.getElementById('updateSignIn');
 const getUserAppBtn = document.getElementById('getUserApp');
 const getOrderedUserApp = document.getElementById('getOrderedUserApp');
+const createFundingOpportunity = document.getElementById('createFundingOpportunity');
+const showFundingOpportunity = document.getElementById('showFundingOpportunity');
+const applyFundingOpportunity = document.getElementById('applyFundingOpportunity');
+const showFundingOpportunityApplications = document.getElementById('showFundingOpportunityApplications');
 const allInfo = document.getElementById('Client-info'); //This is the part where we display operation status
 const appInfo = document.getElementById('App-info'); //This is where we display info we want to display
 const email = "2508872@students.wits.ac.za";
+var FOName = "ABSA Bursary";
 var userID = [];
+var fundID;
 var userApplications = [];  //Array that contains all the user applications in our database
 var users = [];  //Array tha contains all the users we have in our database
 var fundingOpportunities = [];   //Array that contains all the Funding Opportunities we have in the database
+var FundingApplications = [];   //Array that stores all the Applications to a Funding Opportunity
 
 
 //==================================================Users==============================================================
 
-//Function that displays the Applictions made byt specific user
-function displayApplications(){
-  userApplications.forEach((data)=>{
+//Function that displays the Applictions made by specific user
+function displayApplications(array){
+  array.forEach((data)=>{
     const ID = data.userID;
     const STATUS = data.status;
     const SUBMITDATE = data.submitDate;
@@ -103,7 +110,6 @@ async function addUser(email, role, isSignIn, userToken){
           isSignIn: isSignIn,
           Token: userToken
         });
-        userID.push(docRef.id);
         allInfo.textContent = "Sucessfully Added";
       } catch (e) {
         console.error("Error adding document: ", e);
@@ -149,6 +155,7 @@ async function getUsers(){
   querySnapshot.forEach((doc) => {
     users.push(doc.data());
   });
+  allInfo.textContent = "Operation Sucessful";
 }
 
 
@@ -162,7 +169,7 @@ async function getUserApplications(userID){
   querySnapshot.forEach((doc) => {
     userApplications.push(doc.data());
   });
-  displayApplications();
+  displayApplications(userApplications);
 }
 
 
@@ -191,7 +198,7 @@ async function getAllApplications(userID){
     userApplications.push(doc.data());
   });
   
-  displayApplications();
+  displayApplications(userApplications);
 }
 
 /*   FUNCTION: Used to help us find the userID  of a specific user which will be used through out our query searches
@@ -203,10 +210,11 @@ async function getUserID(email){
   try {
     const q = query(collection(db, 'users'), where('Email', '==', email));
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot);
+    //console.log(querySnapshot);
     querySnapshot.forEach((doc) => {
       userID = doc.id;
     });
+
   } catch (error) {
     console.error(error);
   }
@@ -217,13 +225,43 @@ async function getUserID(email){
 window.onload = getUserID(email);
 
 //======================================Funding Opportunities===========================================================
-async function createFundingOportunity(FOName,type,budget,description){
+
+/*  FUNCTION: Serves to provide the ID of a Specific Funding Opportunity
+*   PARAMS: name- this is the name of the funding Opportunity
+*   The resulting of this function is that it returns the id of the Funding Opportunity based on a name search
+*/
+async function getFundingOpportunityID(name){
+  try {
+    const q1 = query(collection(db, "Funding Opportunity"), where("name", "==", FOName));
+    const querySnapshot = await getDocs(q1);
+    //console.log(querySnapshot);
+    querySnapshot.forEach((doc) => {
+      userID = doc.id;
+    });
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+fundID = getFundingOpportunityID(FOName);
+
+/*  FUNCTION: This function creates a funding opprtunity
+*   PARAMS: FOName- this is the name of the funding opportunity
+*           type- specifies the type of funding(eg.Educational)
+*           budget- explains the amount of money the Fund Manager is willing to spend on the Funding Opportunity
+*           description- self-explanatory, is the Funding Opportunity description
+*           closing- this is the closing date of the funding Opportunity
+*   The function adds to fundingOpportunities list which stores a list of all funding Opportunities
+*/
+async function createFundingOportunity(FOName,type,budget,description,closing){
   try {
     const docRef = await addDoc(collection(db, "Funding Opportunity"), {
       Name: FOName,
       Type: type,
       Budget: budget,
-      Description: description
+      allocatedFunds: 0,
+      Description: description,
+      closingDate: closing
     });
     fundingOpportunities.push(docRef.id);
     allInfo.textContent = "Sucessfully Added";
@@ -231,6 +269,102 @@ async function createFundingOportunity(FOName,type,budget,description){
     console.error("Error adding document: ", e);
   }
 }
+
+
+/*  FUNCTION: This is a function that shows all funding opportunities
+*   The function makes the fundingOpportunities list empty so we can add all the funding Opportunities
+*/
+async function showAllFundingOpportunities(){
+  const querySnapshot = await getDocs(collection(db, "Funding Opportunity"));
+  fundingOpportunities = [];
+  querySnapshot.forEach((doc) => {
+    fundingOpportunities.push(doc.data());
+  });
+  allInfo.textContent = "Operation Sucessful";
+}
+
+
+/*  FUNCTION: This is a function used to get the budget of a Funding Opportunity given the name of the Funding Opportunity
+*   PARAMS: FOName- This is the name of the Funding Opportunity
+*   The result of the function is that it returns a value that represents the budgeted value
+*/
+async function getFundingOpportunityBudget(FOName){
+  const q = query(collection(db, "Funding Opportunity"), where("Name","==", FOName));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    return doc.data().Budget;
+  });
+}
+
+/*  FUNCTION: This is a function used to get the Allocated Funds of a Funding Opportunity given the name of the Funding Opportunity
+*   PARAMS: FOName- This is the name of the Funding Opportunity
+*   The result of the function is that it returns a value that represents the Allocated Funds value
+*/
+async function getFundingOpportunityAlloc(FOName){
+  const q = query(collection(db, "Funding Opportunity"), where("Name","==", FOName));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    return doc.data().allocatedFunds;
+  });
+}
+
+
+/*  FUNCTION: This is a function that adds a funding Opportunity Application to the Funding Opportunity
+*   PARAMS: userID- this is the ID of the user
+*           closingDate- this is the closing date of the funding opportunity
+*/
+async function addFundingApplication(userID, closingDate){
+  try {
+
+    // Reference to the user document
+    const userRef = doc(db, 'Funding Opportunity', fundID);
+
+    // Reference to the subcollection
+    const applicationsRef = collection(userRef, 'Applications');
+    const currentDate = new Date().toLocaleDateString();
+
+    const docRef = await addDoc(applicationsRef, {
+      userID: userID,
+      status: "Pending",
+      submitDate: currentDate
+    });
+    allInfo.textContent = "Added Application Sucessfully";
+  } catch (e) {
+    console.error("Error adding document: ", e);
+}
+}
+
+
+/* FUNCTION: This is a function dedicated to allow users to be able to apply for Funding Opportunity
+*  PARAMS: userID- This corresponds to the ID of the user
+*   This functions does the operations and exits.
+*/
+function applyForFundingOpportunity(userID){
+  addUserApplication(userID, new Date().toLocaleDateString());
+  addFundingApplication(userID);
+}
+
+
+/*  FUNCTION: This is a function that displays all the Applications Associated with a Funding Opportunity
+*
+*
+*/
+async function showAllFundingApplications(name){
+  FundingApplications = [];
+  const userRef = doc(db, 'Funding Opportunity', 'S95CqhAT5T41PMdWzImy');
+
+    // Reference to the subcollection
+  const applicationsRef = collection(userRef, 'Applications');
+  const q = query(applicationsRef, orderBy("submitDate", "asc"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    FundingApplications.push(doc.data());
+  });
+  
+  displayApplications(FundingApplications);
+}
+
+
 
 
 //=========================================OUR Button Event Listeners ==================================================
@@ -244,6 +378,7 @@ getBtn.addEventListener('click', ()=>{
 });
 
 addUserAppBtn.addEventListener('click', ()=>{
+  //This new date gives us the current date
   addUserApplication(userID, new Date().toLocaleDateString());
 });
 
@@ -259,6 +394,23 @@ updateSignInBtn.addEventListener('click',()=>{
   updateSignIn(userID);
 });
 
+createFundingOpportunity.addEventListener('click',()=>{
+  FOName = "ABSA Bursary";
+  createFundingOportunity(FOName,"Educational",1000000,"We love donating to students",new Date(2018, 2, 15))
+});
+
+showFundingOpportunity.addEventListener('click',()=>{
+  showAllFundingOpportunities();
+});
+
+applyFundingOpportunity.addEventListener('click',()=>{
+  applyForFundingOpportunity(userID);
+});
+
+showFundingOpportunityApplications.addEventListener('click',()=>{
+  //showAllFundingApplications(FOName);
+  displayApplications(userApplications);
+});
 
 
 

@@ -6,19 +6,37 @@
     <title>Home Page</title>
     <script src="db.js"  defer type="module"></script>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
     <h1>Welcome to the Web App</h1>
     <button type="button" id="signOut">Log Out</button>
+    <h3>Adds a dummy user</h3>
     <button type="button" id="addSum">Add</button>
+    <h3>Gets all the users in the database</h3>
     <button type="button" id="getSum">Get</button>
+    <h3>Adds a application to a user document</h3>
     <button type="button" id="addUserApp">addUserApp</button>
+    <h3>displays all the user Applications</h3>
     <button type="button" id="getUserApp">getUserApp</button>
+    <h3>Gets user Applications based on a specific preference(we can adjust this)</h3>
     <button type="button" id="getOrderedUserApp">getOrderedUserApp</button>
+    <h3>Used to update SignIn to false. Was used to check whether updates are possible</h3>
     <button type="button" id="updateSignIn">Update SignIn</button>
+    <h3>Used to create a dummy Funding Opportunity</h3>
+    <button type="button" id="createFundingOpportunity">create FO</button>
+    <h3>Used to show all Funding Opportunities</h3>
+    <button type="button" id="showFundingOpportunity">Show FO</button>
+    <h3>Used to apply for Funding</h3>
+    <button type="button" id="applyFundingOpportunity">apply for FO</button>
+    <h3>Displays all Applications to funding Opportunities at the bottom of the page</h3>
+    <button type="button" id="showFundingOpportunityApplications">show applications for FO</button>
+    <div>
+        <h1> Status: <p id="Client-info"></p></h1>
+    </div>
+    
     <section id="App-info">
         
     </section>
-    <p id="Client-info"></p>
+    
     
     
 </body>
