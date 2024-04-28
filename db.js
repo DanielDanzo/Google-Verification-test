@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"
-import { getFirestore, collection, addDoc, getDocs, doc, query, where, orderBy, updateDoc, or  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, query, where, orderBy, updateDoc, or, deleteDoc  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -29,14 +29,17 @@ const createFundingOpportunity = document.getElementById('createFundingOpportuni
 const showFundingOpportunity = document.getElementById('showFundingOpportunity');
 const applyFundingOpportunity = document.getElementById('applyFundingOpportunity');
 const showFundingOpportunityApplications = document.getElementById('showFundingOpportunityApplications');
+const acceptBtn = document.getElementById('Accept');
+const rejectBtn = document.getElementById('Reject');
 const allInfo = document.getElementById('Client-info'); //This is the part where we display operation status
 const appInfo = document.getElementById('App-info'); //This is where we display info we want to display
 const email = "2508872@students.wits.ac.za";
 var FOName = "ABSA Bursary";
-var userID = [];
+var userApplicationID;
+var userID;
 var fundID;
 var userApplications = [];  //Array that contains all the user applications in our database
-var users = [];  //Array tha contains all the users we have in our database
+var users = [];  //Array that contains all the users we have in our database
 var fundingOpportunities = [];   //Array that contains all the Funding Opportunities we have in the database
 var FundingApplications = [];   //Array that stores all the Applications to a Funding Opportunity
 
@@ -92,7 +95,7 @@ async function updateSignIn(userID){
     
   } catch (e) {
     console.error("Error updating document: ", e);
-}
+  }
 }
 
 /*  FUNCTION: Adds user to the database
@@ -123,9 +126,8 @@ async function addUser(email, role, isSignIn, userToken){
 *           After getting user document we create a collection in that user document
 *   TODO: be able to update status
 */
-async function addUserApplication(userID, closingDate){
+async function addUserApplication(appName, userID, closingDate){
   try {
-
       // Reference to the user document
       const userRef = doc(db, 'users', userID);
 
@@ -134,6 +136,7 @@ async function addUserApplication(userID, closingDate){
       const currentDate = new Date().toLocaleDateString();
 
       const docRef = await addDoc(applicationsRef, {
+        FundingOpportunity: appName,
         userID: userID,
         status: "Pending",
         submitDate: currentDate,
@@ -172,6 +175,28 @@ async function getUserApplications(userID){
   displayApplications(userApplications);
 }
 
+/*  FUNCTION: returns an array full of all the applications made by user in the database
+*   PARAMS: userID- used to navigate to user documents
+*   Check whether or not a user has applied to a specific Funding Opportunity
+*/
+async function allowUserApplication(userID, FOName){
+  const userRef = query(collection(db, 'Funding Opportunity',userID, 'Applications'), where('Name', '==',FOName));
+  const namesQuerySnapshot = await getDocs(userRef);
+  if(namesQuerySnapshot.empty){
+    return true;
+  }
+  const doc = namesQuerySnapshot.docs[0];
+
+  // Reference to the subcollection
+  const applicationsRef = collection( doc.ref);
+  const q = query(doc.ref, where('status','==','Pending'));
+  const querySnapshot = await getDocs(q);
+  if(querySnapshot.empty){
+    return true;
+  }
+  return false;
+}
+
 
 /*  FUNCTION: Unrelated but this functions retrieves a specific doc from the user
 *   PARAMS: userID- inorder to retrieve this information we specify the userID
@@ -200,6 +225,27 @@ async function getAllApplications(userID){
   
   displayApplications(userApplications);
 }
+
+/*  FUNCTION: This is used to get the Application ID of the Funding Opportunity from user side
+*   PARAMS: name- this is the name of the Funding Opportunity
+*           userID- this takes in the userID of the user
+*   This function will update userApplicationID which is the same ID we want 
+*/
+async function getUserApplicationID(name,userID){
+  try {
+    const q = query(collection(db, 'users',userID,'Applications'), where('FundingOpportunity', '==', name));
+    const querySnapshot = await getDocs(q);
+    //console.log(querySnapshot);
+    querySnapshot.forEach((doc) => {
+      userApplicationID = doc.id;
+    });
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
 
 /*   FUNCTION: Used to help us find the userID  of a specific user which will be used through out our query searches
 *   PARAMS: email- will be used to find the row that contains the email, essentially locating the user
@@ -232,18 +278,36 @@ window.onload = getUserID(email);
 */
 async function getFundingOpportunityID(name){
   try {
-    const q1 = query(collection(db, "Funding Opportunity"), where("name", "==", FOName));
+    const q1 = query(collection(db, 'Funding Opportunity'), where("Name", "==", name));
     const querySnapshot = await getDocs(q1);
     //console.log(querySnapshot);
     querySnapshot.forEach((doc) => {
-      userID = doc.id;
+      fundID = doc.id;
     });
 
   } catch (error) {
     console.error(error);
   }
 }
-fundID = getFundingOpportunityID(FOName);
+getFundingOpportunityID(FOName);
+
+
+
+
+
+/* FUNCTION: Checks whether or not there is another funding opportunity with the exact same name
+* PARAMS: name- this is the name of funding opportunity to verify or chack if it already exists
+*  Should return true if there is no funding opportunity with the same name
+*/
+async function verifyFundingName(name){
+  const userRef = query(collection(db, 'Funding Opportunity'), where('Name','==',name));
+  const namesQuerySnapshot = await getDocs(userRef);
+  if(namesQuerySnapshot.empty){
+    return true;
+  }
+  return false;
+}
+
 
 /*  FUNCTION: This function creates a funding opprtunity
 *   PARAMS: FOName- this is the name of the funding opportunity
@@ -255,6 +319,13 @@ fundID = getFundingOpportunityID(FOName);
 */
 async function createFundingOportunity(FOName,type,budget,description,closing){
   try {
+    const verified = await verifyFundingName(FOName);
+    //If !verified then the name of the funding opportunity to be created already exists
+    if(!verified){
+      console.log('Funding Opportunity with the same name exists');
+      return;
+    }
+
     const docRef = await addDoc(collection(db, "Funding Opportunity"), {
       Name: FOName,
       Type: type,
@@ -313,7 +384,7 @@ async function getFundingOpportunityAlloc(FOName){
 *   PARAMS: userID- this is the ID of the user
 *           closingDate- this is the closing date of the funding opportunity
 */
-async function addFundingApplication(userID, closingDate){
+async function addFundingApplication(userID, fundID){
   try {
 
     // Reference to the user document
@@ -339,25 +410,38 @@ async function addFundingApplication(userID, closingDate){
 *  PARAMS: userID- This corresponds to the ID of the user
 *   This functions does the operations and exits.
 */
-function applyForFundingOpportunity(userID){
-  addUserApplication(userID, new Date().toLocaleDateString());
-  addFundingApplication(userID);
+async function applyForFundingOpportunity(userID, fundID, closingDate){
+  const isValidApplication = await allowUserApplication(userID, FOName);
+  //If a user has already applied for the Funding Opportunity then they cant apply again
+  if(!isValidApplication){
+    console.log('Already Applied for this Funding Opportunity');
+    return;
+  }
+
+  addUserApplication(FOName, userID, closingDate);
+  addFundingApplication(userID, fundID);
 }
 
 
 /*  FUNCTION: This is a function that displays all the Applications Associated with a Funding Opportunity
-*
-*
+*   PARAMS: name-thia is the name of the funding opportunity you want to be displayed
+*   The function updated FundingApplications array which will contain all the funding Opportunities
 */
 async function showAllFundingApplications(name){
   FundingApplications = [];
-  const userRef = doc(db, 'Funding Opportunity', 'S95CqhAT5T41PMdWzImy');
 
-    // Reference to the subcollection
-  const applicationsRef = collection(userRef, 'Applications');
+  const userRef = query(collection(db, 'Funding Opportunity'), where('Name','==',name));
+  const namesQuerySnapshot = await getDocs(userRef);
+
+  const doc = namesQuerySnapshot.docs[0];
+
+  // Reference to the subcollection
+  const applicationsRef = collection( doc.ref,'Applications');
   const q = query(applicationsRef, orderBy("submitDate", "asc"));
   const querySnapshot = await getDocs(q);
+  console.log(querySnapshot);
   querySnapshot.forEach((doc) => {
+    console.log(doc.data());
     FundingApplications.push(doc.data());
   });
   
@@ -365,6 +449,102 @@ async function showAllFundingApplications(name){
 }
 
 
+/*  FUNCTION: This function removes an application to the Funding Opportunity on the Funding Management side
+*   PARAMS: fundID-this is the ID of the Funding Opportunity
+*           userID-this is the userID of user Application to be removed 
+*   This is a void function that removes the application permanently
+*/
+async function removeFundingApplication(fundID, userID){
+  const docRef = query(collection(db, 'Funding Opportunity', fundID,'Applications'), where('userID', '==', userID));
+  const namesQuerySnapshot = await getDocs(docRef);
+
+  const doc = namesQuerySnapshot.docs[0];
+  deleteDoc(doc.ref)
+  .then(() => {
+    console.log('Document successfully deleted!');
+    allInfo.textContent = "Rejected Sucessfully on Funding Opportunity Database";
+  })
+  .catch((error) => {
+    console.error('Error removing document: ', error);
+  });
+}
+
+
+/*  FUNCTION: This function is responsible for handling the rejection of applications to Funding Opportunities
+*   PARAMS: FOName- this is the name of the Funding Opportunity
+*           userID- is the ID of the user
+*           fundID- this is the ID of the Funding Opportunity
+*   Is a void function that deletes the application from Funding Opportunity and updates the application on the user side to rejected
+*/
+async function onRejectApplication(FOName, userID,fundID){
+  try {
+    await getUserApplicationID(FOName, userID);
+    //console.log(userApplicationID);
+    const q = doc(db, "users", userID, 'Applications', userApplicationID);
+    await updateDoc(q, {
+      status: 'Rejected', 
+    })
+    .then(()=>{
+      allInfo.textContent = "Rejected Sucessfully";
+    })
+    .catch((error)=>{
+      console.error("Error updating document: ", error)
+    });
+    
+  } catch (e) {
+    console.error("Error updating document: ", e);
+  }
+
+  await removeFundingApplication(fundID,userID);
+}
+
+
+/*  FUNCTION: This function is responsible for handling the acceptance of applications to Funding Opportunities
+*   PARAMS: FOName- this is the name of the Funding Opportunity
+*           userID- is the ID of the user
+*           fundID- this is the ID of the Funding Opportunity
+*   Is a void function that updates the application from Funding Opportunity and  the application on the user side to accepted
+*/
+async function onAcceptApplication(FOName, userID){
+  try {
+    await getUserApplicationID(FOName, userID);
+    //console.log(userApplicationID);
+    const q = doc(db, "users", userID, 'Applications', userApplicationID);
+    await updateDoc(q, {
+      status: 'Accepted', 
+    })
+    .then(()=>{
+      allInfo.textContent = "Accepted Sucessfully";
+    })
+    .catch((error)=>{
+      console.error("Error updating document: ", error)
+    });
+    
+  } catch (e) {
+    console.error("Error updating document: ", e);
+  }
+
+  try {
+    await getFundingOpportunityID(FOName);
+    const userRef = query(collection(db, 'Funding Opportunity', fundID,'Applications'), where('userID', '==', userID));
+    const namesQuerySnapshot = await getDocs(userRef);
+
+    const doc = namesQuerySnapshot.docs[0];
+
+    await updateDoc(doc.ref, {
+      status: 'Accepted', 
+    })
+    .then(()=>{
+      allInfo.textContent = "Accepted Sucessfully on Funding Database";
+    })
+    .catch((error)=>{
+      console.error("Error updating document: ", error)
+    });
+    
+  } catch (e) {
+    console.error("Error updating document: ", e);
+  }
+}
 
 
 //=========================================OUR Button Event Listeners ==================================================
@@ -378,25 +558,33 @@ getBtn.addEventListener('click', ()=>{
 });
 
 addUserAppBtn.addEventListener('click', ()=>{
+  getUserID(email);
   //This new date gives us the current date
-  addUserApplication(userID, new Date().toLocaleDateString());
+  addUserApplication(FOName, userID, new Date().toLocaleDateString());
 });
 
 getUserAppBtn.addEventListener('click',()=>{
+  getUserID(email);
   getUserApplications(userID);
 });
 
 getOrderedUserApp.addEventListener('click',()=>{
+  getUserID(email);
   getAllApplications(userID);
 });
 
 updateSignInBtn.addEventListener('click',()=>{
+  getUserID(email);
   updateSignIn(userID);
 });
 
 createFundingOpportunity.addEventListener('click',()=>{
   FOName = "ABSA Bursary";
-  createFundingOportunity(FOName,"Educational",1000000,"We love donating to students",new Date(2018, 2, 15))
+  const type = "Educational";
+  const budget = 1000000;
+  const description = "We love donating to students";
+  const closingDate = new Date(2024, 8, 15);
+  createFundingOportunity(FOName, type, budget, description, closingDate);
 });
 
 showFundingOpportunity.addEventListener('click',()=>{
@@ -404,16 +592,24 @@ showFundingOpportunity.addEventListener('click',()=>{
 });
 
 applyFundingOpportunity.addEventListener('click',()=>{
-  applyForFundingOpportunity(userID);
+  getUserID(email);
+  const closingDate = new Date(2024, 8, 15);
+  getFundingOpportunityID(FOName);
+  applyForFundingOpportunity(userID, fundID, closingDate);
 });
 
 showFundingOpportunityApplications.addEventListener('click',()=>{
-  //showAllFundingApplications(FOName);
-  displayApplications(userApplications);
+  showAllFundingApplications(FOName);
+  //displayApplications(userApplications);
 });
 
+acceptBtn.addEventListener('click', ()=>{
+  onAcceptApplication(FOName, userID);
+});
 
-
+rejectBtn.addEventListener('click', ()=>{
+  onRejectApplication(FOName, userID, fundID);
+});
 
 
 
